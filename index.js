@@ -10,20 +10,12 @@ const targetElement = require('./config').targetElement;
   await page.goto(targetWebsite);
   
   const mainElements = await page.$$(targetElement);
-  console.log('musty', mainElements)
-//   const test = [];
 
-  for (const singleElement of mainElements) {
-    await singleElement.$eval(".ExCategory-formCheckbox js-ex-finder", class2El => {
-        // if(class2El.value) {
-            const datasetHandle = class2El.value;
-            console.log('yes', datasetHandle.jsonValue())            
-        // }
-        // test.push(datasetHandle)
-    })
+  for (let singleElement of mainElements) {
+      let inputField = await singleElement.$eval('input[type=checkbox]', el => el.value);
+      let category = await singleElement.$eval('.ExCategory-formLabelLabel', el => el.innerText);  
   }
 
-//   console.log(test)
 
   await browser.close();
   console.log('off')
