@@ -9,11 +9,14 @@ const targetElement = require('./config').targetElement;
   const page = await browser.newPage();
   await page.goto(targetWebsite);
   
-  const test = await page.$$eval(targetElement, el => {
-         
-        return el.map(element => element.innerText)
-    });
-  console.log(test)
+  const mainElements = await page.$$eval(targetElement, el => el);
+
+  for (const singleElement of mainElements) {
+    console.debug(await class1El.$eval(".class2", class2El =>
+      `${class2El.parentNode.dataset.id}: ${class2El.innerText}`
+    ));
+}
+//   console.log(test)
 
   await browser.close();
   console.log('off')
