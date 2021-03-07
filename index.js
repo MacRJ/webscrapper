@@ -1,6 +1,6 @@
 const writeToFile = require('./functions/writeToFile');
 const targetWebsite = require('./config').targetWebsite;
-const {openPage, closePage, closeBrowser} = require('./functions/pageControl');
+const {openPage, closeBrowser} = require('./functions/pageControl');
 const {mainDataPage} = require('./mainDataPage');
 
 (async () => {
@@ -9,7 +9,7 @@ const {mainDataPage} = require('./mainDataPage');
   
   const mainElements = await page.$$('.ExCategory-formLabel');
   //for debug
-//   let singleElement = mainElements[0];
+  //let singleElement = mainElements[0];
 
   for (let singleElement of mainElements) {
       let inputField = await singleElement.$eval('input[type=checkbox]', el => el.value);
@@ -28,8 +28,6 @@ const {mainDataPage} = require('./mainDataPage');
   await closeBrowser();
   console.log('off')
 
-//todo: This is where the object gets saved as a json object -- first build the object
 writeToFile.save(allWorkouts)
-
 
 })();
