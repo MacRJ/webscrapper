@@ -2,7 +2,6 @@ const puppeteer = require('puppeteer');
 
 let browser;
 exports.openPage = async function(targetWebsite) {
-    console.log('mainTargetPage', targetWebsite);
     browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(targetWebsite);
@@ -10,7 +9,6 @@ exports.openPage = async function(targetWebsite) {
 }
 
 exports.newPage = async function(targetWebsite) {
-    console.log('targetWebpage', targetWebsite);
     const page = await browser.newPage();
     await page.goto(targetWebsite);
     return {page}

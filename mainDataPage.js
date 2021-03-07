@@ -12,7 +12,6 @@ exports.mainDataPage = async function(targetWebsite) {
     const allWorkouts = await page.$$('.ExResult-row');
 
     for (const workout of allWorkouts) {
-        console.log('here3')
         const newObj = {};
         const name = await workout.$eval('link[itemprop=name]', el => el.innerText);
         console.log({name})
