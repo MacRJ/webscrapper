@@ -6,7 +6,7 @@ const {mainDataPage} = require('./mainDataPage');
 
 (async () => {
   const allWorkouts = {};
-  let {page, browser} = await openPage(targetWebsiteTemp);
+  let {page} = await openPage(targetWebsiteTemp);
   
   const mainElements = await page.$$(targetElement);
   let singleElement = mainElements[0];
@@ -17,10 +17,9 @@ const {mainDataPage} = require('./mainDataPage');
 
       closePage(page);
 
-    //   console.log('inputField', inputField);
       try {
           //Should return an array of objects {name, workoutType, imageURL}
-          await mainDataPage(inputField)
+          allWorkouts[category] = await mainDataPage(inputField)
       }
       catch(error) {
           console.log(error)
@@ -32,7 +31,7 @@ const {mainDataPage} = require('./mainDataPage');
   console.log('off')
 
 //todo: This is where the object gets saved as a json object -- first build the object
-// writeToFile.save(testObject)
+writeToFile.save(allWorkouts)
 
 
 })();

@@ -13,17 +13,18 @@ exports.mainDataPage = async function(targetWebsite) {
 
     for (const workout of allWorkouts) {
         const newObj = {};
-        const name = await workout.$eval('link[itemprop=name]', el => el.innerText);
-        console.log({name})
-        //name
-            // newObj[]
+        const preformattedName = await workout.$eval('.ExResult-cell > h3 > a', el => el.innerText)
+        const name = preformattedName.replace(/\s/g, "_");
 
-        //workoutType
-
-        //imageURL
+        newObj[name] = {};
+        newObj[name]['category'] = await workout.$eval('.ExResult-cell > .ExResult-muscleTargeted > a', el => el.innerText);
+        newObj[name]['equipmentType'] = await workout.$eval('.ExResult-cell > .ExResult-equipmentType > a', el => el.innerText);
+        newObj[name]['img'] = await workout.$eval('.ExResult-cell > img', el => el.src);
+        
+        arrayOfWorkouts.push(newObj);
     };
 
-    await closeBrowser();
+    await closePage(page);
     console.log('finished');
-
+    return arrayOfWorkouts;
 };
