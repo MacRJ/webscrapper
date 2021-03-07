@@ -1,30 +1,28 @@
 const writeToFile = require('./functions/writeToFile');
-const targetWebsiteTemp = require('./config').targetWebsiteTemp;
-const targetElement = require('./config').targetElement;
+const targetWebsite = require('./config').targetWebsite;
 const {openPage, closePage, closeBrowser} = require('./functions/pageControl');
 const {mainDataPage} = require('./mainDataPage');
 
 (async () => {
   const allWorkouts = {};
-  let {page} = await openPage(targetWebsiteTemp);
+  let {page} = await openPage(targetWebsite);
   
-  const mainElements = await page.$$(targetElement);
-  let singleElement = mainElements[0];
+  const mainElements = await page.$$('.ExCategory-formLabel');
+  //for debug
+//   let singleElement = mainElements[0];
 
-//   for (let singleElement of mainElements) {
+  for (let singleElement of mainElements) {
       let inputField = await singleElement.$eval('input[type=checkbox]', el => el.value);
       let category = await singleElement.$eval('.ExCategory-formLabelLabel', el => el.innerText);
 
-      closePage(page);
 
       try {
-          //Should return an array of objects {name, workoutType, imageURL}
           allWorkouts[category] = await mainDataPage(inputField)
       }
       catch(error) {
-          console.log(error)
+          console.error(`error with inputField=${inputField} with error: ${error}`);
       }
-//   }
+  }
 
 
   await closeBrowser();

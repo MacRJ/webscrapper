@@ -1,13 +1,15 @@
-const {targetWebsite, targetDataPageTemp} = require('./config');
-const {newPage, closePage, closeBrowser} = require('./functions/pageControl');
+const {targetWebsite} = require('./config');
+const {openNewPage, closePage} = require('./functions/pageControl');
 
 //https://www.bodybuilding.com/exercises/finder/?muscle=chest
-exports.mainDataPage = async function(targetWebsite) {
+exports.mainDataPage = async function(targetWebPage) {
     let arrayOfWorkouts = [];
-    // const newPage = targetWebsite + '?muscle=' + page;
-    const newPagepage = targetDataPageTemp;
+    const newPage = targetWebsite + '?muscle=' + targetWebPage;
     
-    const {page} = await newPage(newPagepage);
+    //For debug
+    // const newPage = targetDataPageTemp;
+    
+    const {page} = await openNewPage(newPage);
 
     const allWorkouts = await page.$$('.ExResult-row');
 
